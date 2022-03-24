@@ -43,4 +43,28 @@ foreach( $order->get_items() as $item_id => $item ){
     }
   }
 }
+
+// OR
+
+$order_id = XXX;
+
+$order = wc_get_order( $order_id ); //returns WC_Order if valid order 
+$items = $order->get_items();   //returns an array of WC_Order_item or a child class (i.e. WC_Order_Item_Product)
+
+foreach( $items as $item ) {
+
+  //returns the type (i.e. variable or simple)
+  $type = $item->get_type();
+
+  //the product id, always, no matter what type of product
+  $product_id = $item->get_product_id();
+
+  //a default
+  $variation_id = false;
+
+  //check if this is a variation using is_type
+  if( $item->is_type('variable') ) {
+      $variation_id = $item->get_variation_id();
+  }
+}
 ```
